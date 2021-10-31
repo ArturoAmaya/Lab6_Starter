@@ -19,6 +19,7 @@ window.addEventListener('DOMContentLoaded', init);
 async function init() {
   // fetch the recipes and wait for them to load
   let fetchSuccessful = await fetchRecipes();
+  console.log(recipeData);
   // if they didn't successfully load, quit the function
   if (!fetchSuccessful) {
     console.log('Recipe fetch unsuccessful');
@@ -43,19 +44,17 @@ async function fetchRecipes() {
     // in the recipes folder and fetch them from there. You'll need to add their paths to the recipes array.
 
     // Part 1 Expose - TODO'
-    for (const x in recipe){
-      fetch(x)
-      .then(response => response.json)
-      .then(data => recipeData[x] = data)
+    alert('in here');
+    for (let i=0; i<recipes.length; i++){
+      alert(recipes[i]);
+      fetch(recipes[i])
+      .then(response => response.json())
+      .then(data => recipeData[recipes[i]] = data)
       .catch (reject(false));
     }
-
+    alert('finished here');
     let count = 0;
-    for (const x in recipeData){
-      if (recipeData.hasOwnProperty(x)){
-        count++;
-      }
-    }
+    console.log(recipeData);
 
     if (count == recipe.length){
       resolve(true);
