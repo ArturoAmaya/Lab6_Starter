@@ -19,6 +19,7 @@ window.addEventListener('DOMContentLoaded', init);
 async function init() {
   // fetch the recipes and wait for them to load
   let fetchSuccessful = await fetchRecipes();
+  console.log('hello');
   console.log(recipeData);
   // if they didn't successfully load, quit the function
   if (!fetchSuccessful) {
@@ -42,25 +43,37 @@ async function fetchRecipes() {
 
     // For part 2 - note that you can fetch local files as well, so store any JSON files you'd like to fetch
     // in the recipes folder and fetch them from there. You'll need to add their paths to the recipes array.
-
-    // Part 1 Expose - TODO'
-    alert('in here');
-    for (let i=0; i<recipes.length; i++){
-      alert(recipes[i]);
-      fetch(recipes[i])
-      .then(response => response.json())
-      .then(data => recipeData[recipes[i]] = data)
-      .catch (reject(false));
-    }
-    alert('finished here');
     let count = 0;
-    console.log(recipeData);
-
-    if (count == recipe.length){
-      resolve(true);
-    } else {
-      reject(false);
+    // Part 1 Expose - TODO'
+    //alert('in here');
+    for (let i=0; i<recipes.length; i++){
+      //alert(recipes[i]);
+      fetch(recipes[i])
+      .then(function (response){
+        return response.json();
+      }, function(errMsg){
+        console.log(errMsg);
+        reject(false);
+      })
+      .then(function(data){
+        recipeData[i] = data;
+        count++;
+        if (count == recipes.length-1){
+          console.log('urmum');
+          resolve(true);
+        }
+      });
+      //.then(() => {
+        
+      //});
+      //.catch(reject(false));
     }
+    /*alert('finished here');
+    console.log(recipeData);
+    console.log('hmm');
+    console.log('fool' + count);
+    */
+    
   });
 }
 
@@ -72,6 +85,23 @@ function createRecipeCards() {
   // show any others you've added when the user clicks on the "Show more" button.
 
   // Part 1 Expose - TODO
+  console.log(recipeData);
+  let mainB = document.querySelector('main');
+  const recipe1 = document.createElement('recipe-card');
+  recipe1.data = recipeData['0'];
+  console.log('one done');
+  mainB.appendChild(recipe1);
+  //console.log(recipe1);
+  const recipe2 = document.createElement('recipe-card');
+  recipe2.data = recipeData['1'];
+  console.log('two done');
+  mainB.appendChild(recipe2);
+  
+  const recipe3 = document.createElement('recipe-card');
+  recipe3.data = recipeData['2'];
+  console.log('three done');
+  mainB.appendChild(recipe3);
+
 }
 
 function bindShowMore() {
