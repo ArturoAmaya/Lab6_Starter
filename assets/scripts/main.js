@@ -42,7 +42,26 @@ async function fetchRecipes() {
     // For part 2 - note that you can fetch local files as well, so store any JSON files you'd like to fetch
     // in the recipes folder and fetch them from there. You'll need to add their paths to the recipes array.
 
-    // Part 1 Expose - TODO
+    // Part 1 Expose - TODO'
+    for (const x in recipe){
+      fetch(x)
+      .then(response => response.json)
+      .then(data => recipeData[x] = data)
+      .catch (reject(false));
+    }
+
+    let count = 0;
+    for (const x in recipeData){
+      if (recipeData.hasOwnProperty(x)){
+        count++;
+      }
+    }
+
+    if (count == recipe.length){
+      resolve(true);
+    } else {
+      reject(false);
+    }
   });
 }
 
