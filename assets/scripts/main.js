@@ -5,7 +5,10 @@
 const recipes = [
   'https://introweb.tech/assets/json/ghostCookies.json',
   'https://introweb.tech/assets/json/birthdayCake.json',
-  'https://introweb.tech/assets/json/chocolateChip.json'
+  'https://introweb.tech/assets/json/chocolateChip.json',
+  './assets/recipes/guac.json',
+  './assets/recipes/pumpkinseed.json',
+  './assets/recipes/spicyjoes.json'
 ];
 
 // Once all of the recipes that were specified above have been fetched, their
@@ -47,20 +50,26 @@ async function fetchRecipes() {
     // Part 1 Expose - TODO'
     //alert('in here');
     for (let i=0; i<recipes.length; i++){
-      //alert(recipes[i]);
+      //console.log ('about to fetch ' + recipes[i]);
       fetch(recipes[i])
       .then(function (response){
+        //console.log('about to get the json for ' + recipes[i]);
         return response.json();
       }, function(errMsg){
         console.log(errMsg);
         reject(false);
       })
       .then(function(data){
+        //console.log('about to set the json for ' + recipes[i]);
         recipeData[i] = data;
         count++;
-        if (count == recipes.length-1){
-          console.log('urmum');
+      })
+      .then(()=> {
+        //console.log(count);
+        if (count == recipes.length){
+          console.log(count);
           resolve(true);
+          return;
         }
       });
       //.then(() => {
@@ -111,6 +120,28 @@ function bindShowMore() {
   // that were fetched. You should fetch every recipe in the beginning, whether you
   // display it or not, so you don't need to fetch them again. Simply access them
   // in the recipeData object where you stored them/
-
+  let showmore = true;
   // Part 2 Explore - TODO
+  let button = document.querySelector("button");
+  button.addEventListener("click", function(){
+    // if showmore is true then expand and make it show less
+    if (showmore){
+      showmore = false;
+      let mainB = document.querySelector('main');
+      const recipe1 = document.createElement('recipe-card');
+      recipe1.data = recipeData['3'];
+      console.log('four done');
+      mainB.appendChild(recipe1);
+      //console.log(recipe1);
+      const recipe2 = document.createElement('recipe-card');
+      recipe2.data = recipeData['4'];
+      console.log('five done');
+      mainB.appendChild(recipe2);
+      
+      const recipe3 = document.createElement('recipe-card');
+      recipe3.data = recipeData['5'];
+      console.log('six done');
+      mainB.appendChild(recipe3);
+    }
+  });
 }

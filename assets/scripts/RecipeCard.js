@@ -99,7 +99,8 @@ class RecipeCard extends HTMLElement {
     //    & All of the helper functions below
     // Make sure to attach your root element and styles to the shadow DOM you
     // created in the constructor()
-
+      //console.log("inside the recipecard data");
+      //console.log(data);
     // Part 1 Expose - TODO
       const recipeThumbnail = document.createElement('img');
       const title = document.createElement('p');
@@ -141,7 +142,7 @@ class RecipeCard extends HTMLElement {
     ratingDiv.classList.add("rating");
 
     // div/span
-    let ratingScore = searchForKey(data, "ratingValue");
+    let ratingScore = Number.parseFloat(searchForKey(data, "ratingValue")).toPrecision(2);
     ratingSpan.innerHTML = ratingScore;
     ratingDiv.appendChild(ratingSpan);
 
@@ -151,7 +152,9 @@ class RecipeCard extends HTMLElement {
     ratingDiv.appendChild(ratingImg);
 
     //div/ span
-    ratingSpan2.innerHTML = searchForKey(data, "ratingCount");
+    // for some reason it required a ternary op cuz some recipes use reviewcount, not ratingcount.
+    const temp = searchForKey(data, "ratingCount") ? searchForKey(data, "ratingCount"): searchForKey(data,"reviewCount");
+    ratingSpan2.innerHTML = "(" + temp + ")"
     ratingDiv.appendChild(ratingSpan2);
 
     card.appendChild(ratingDiv);
