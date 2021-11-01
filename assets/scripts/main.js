@@ -142,6 +142,16 @@ function bindShowMore() {
       recipe3.data = recipeData['5'];
       console.log('six done');
       mainB.appendChild(recipe3);
+
+      button.innerHTML = "Show Less";
+    } else {
+      showmore =true;
+      button.innerHTML = "Show More";
+      let recipecards = document.querySelectorAll('recipe-card');
+      recipecards[3].remove();
+      recipecards[4].remove();
+      recipecards[5].remove();
+
     }
   });
 }
